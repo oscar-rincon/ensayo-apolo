@@ -3,6 +3,7 @@
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
+# https://github.com/Bengal1/Simple-CNN-Guide/blob/main/SimpleCNN.py
 # ----------------------------------------------------------------------
 """
 ============================
@@ -36,25 +37,26 @@ from torch.utils.data import DataLoader, random_split
 from torchvision import datasets
 from torchvision.transforms import ToTensor
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 
 #--------------- Hyperparameters ---------------#
-learning_rate = 1e-3
-num_epochs = 10
-batch_size = 256
-num_class = 10
+learning_rate = 1e-3 # Learning rate for the optimizer
+num_epochs = 10 # Number of epochs to train the model
+batch_size = 256 # Batch size for training and validation
+num_class = 10 # Number of classes in the dataset
 validation_split = 0.2  # 20% of training data for validation
 #-------------- Config Parameters --------------#
-input_channels = 1
-conv1_out_channels = 32
-conv2_out_channels = 64
-conv_kernel_size = 5
-pool_kernel_size = 2
-pool_stride = 2
-fc1_in = 64 * 4 * 4
-fc2_in = 512
-dropout1_rate = 0.45
-dropout2_rate = 0.35
+input_channels = 1 # MNIST images are grayscale (1 channel)
+conv1_out_channels = 32 # Number of output channels for the first convolutional layer
+conv2_out_channels = 64 # Number of output channels for the second convolutional layer
+conv_kernel_size = 5 # Size of the convolutional kernel (5x5)
+pool_kernel_size = 2 # Size of the max pooling kernel (2x2)
+pool_stride = 2 # Stride for the max pooling operation
+fc1_in = 64 * 4 * 4 # Input features for the first fully connected layer (after flattening)
+fc2_in = 512 # Input features for the second fully connected layer
+dropout1_rate = 0.45 # Dropout rate after the first pooling layer
+dropout2_rate = 0.35 # Dropout rate after the second pooling layer
 
 
 #--------------- Model Definition ---------------#
@@ -304,32 +306,98 @@ def train_model(model: nn.Module,
 
 
 #-------------- Visualization -------------------#
-def plot_training_losses(train_loss_epochs: list[float],
-                         validation_loss_epochs: list[float]):
+def plot_training_losses(
+    train_loss_epochs: list[float],
+    validation_loss_epochs: list[float],
+    save_dir: str = "plots",
+    filename: str = "training_validation_loss.pdf",
+):
     """
-    Plots training and validation loss over epochs.
+    Plots training and validation loss over epochs and saves the plot as a PDF.
 
     Args:
-        train_loss_epochs (list[float]): List of training loss values per epoch.
-        validation_loss_epochs (list[float]): List of validation loss values per epoch.
+        train_loss_epochs (list[float]):
+            List of training loss values per epoch.
+
+        validation_loss_epochs (list[float]):
+            List of validation loss values per epoch.
+
+        save_dir (str):
+            Directory where the plot will be saved.
+
+        filename (str):
+            Name of the output PDF file.
     """
-    eps = range(1, len(train_loss_epochs) + 1)
-    # --- Plotting Configuration ---
+
+    # --------------------------------------------------
+    # Create directory if it does not exist
+    # --------------------------------------------------
+    save_dir = Path(save_dir)
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    # --------------------------------------------------
+    # Epochs
+    # --------------------------------------------------
+    epochs = range(1, len(train_loss_epochs) + 1)
+
+    # --------------------------------------------------
+    # Plot
+    # --------------------------------------------------
     plt.figure(figsize=(10, 5))
-    plt.plot(eps, train_loss_epochs, linestyle='-', color='#1f77b4',
-             label='Train Loss', linewidth=2)
-    plt.plot(eps, validation_loss_epochs, linestyle='-', color='#d62728',
-             label='Validation Loss', linewidth=2)
-    # --- Chart Customization ---
-    plt.title("Training & Validation Loss Over Epochs", fontsize=16,
-              fontweight='bold')
-    plt.xticks(eps)  # This ensures that xticks are integers
+
+    plt.plot(
+        epochs,
+        train_loss_epochs,
+        linestyle="-",
+        color="#1f77b4",
+        label="Train Loss",
+        linewidth=2,
+    )
+
+    plt.plot(
+        epochs,
+        validation_loss_epochs,
+        linestyle="-",
+        color="#d62728",
+        label="Validation Loss",
+        linewidth=2,
+    )
+
+    # --------------------------------------------------
+    # Chart customization
+    # --------------------------------------------------
+    plt.title(
+        "Training & Validation Loss Over Epochs",
+        fontsize=16,
+        fontweight="bold",
+    )
+
     plt.xlabel("Epoch", fontsize=12)
     plt.ylabel("Loss", fontsize=12)
+
     plt.legend()
-    plt.grid(True, linestyle='--', alpha=0.6)
-    # --- Display Plot ---
-    plt.show()
+    plt.grid(True, linestyle="--", alpha=0.6)
+
+    # Only use integer ticks
+    plt.xticks(epochs)
+
+    plt.tight_layout()
+
+    # --------------------------------------------------
+    # Save as PDF
+    # --------------------------------------------------
+    output_path = save_dir / filename
+
+    plt.savefig(
+        output_path,
+        format="pdf",
+        bbox_inches="tight",
+    )
+
+    # Close figure
+    plt.close()
+
+    print(f"Plot saved to: {output_path}")
 
 
 #----------------- Data Loading -----------------#
@@ -387,4 +455,9 @@ if __name__ == "__main__":
                                               test_loader, h_device)
     print(f"\nTest Loss: {test_loss:.4f}, Test Accuracy: {test_accuracy:.2f}%")
     # Plot Loss
-    plot_training_losses(train_losses, validation_losses)
+    plot_training_losses(
+        train_losses,
+        validation_losses,
+        save_dir="results_mnist/plots",
+        filename="training_validation_loss.pdf",
+    )
