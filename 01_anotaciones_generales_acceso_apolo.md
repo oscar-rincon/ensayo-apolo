@@ -52,13 +52,14 @@ Si las credenciales no funcionan, solicita soporte en:
 
 3. COMANDOS ÚTILES EN APOLO
 ----------------------------
-module avail     -> Ver módulos disponibles (ej. versiones de Python, MPI, etc.)
-sinfo            -> Información de las particiones (colas de cómputo)
-squeue           -> Trabajos en ejecución o en espera
-ssqueue          -> (no funciona por el momento) -> Información detallada de los trabajos activos
-create_slurm     -> (no funciona por el momento) -> Crea una plantilla de trabajo (archivo .sh) para SLURM
-sbatch           -> Envía el archivo .sh a la cola de SLURM
-scancel <job_id> -> Cancela un trabajo en ejecución
+
+- module avail     -> Ver módulos disponibles (ej. versiones de Python, MPI, etc.)
+- sinfo            -> Información de las particiones (colas de cómputo)
+- squeue           -> Trabajos en ejecución o en espera
+- ssqueue          -> (no funciona por el momento) -> Información detallada de los trabajos activos
+- create_slurm     -> (no funciona por el momento) -> Crea una plantilla de trabajo (archivo .sh) para SLURM
+- sbatch           -> Envía el archivo .sh a la cola de SLURM
+- scancel <job_id> -> Cancela un trabajo en ejecución
 
 4. MONITOREO DE TRABAJOS
 -------------------------

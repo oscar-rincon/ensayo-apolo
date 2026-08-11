@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 # Configuration
 # ======================================================
 
-USE_GPU = True          # Set False to force CPU
+USE_GPU = False          # Set False to force CPU
 SEED = 42
 EPOCHS = 70_001
 LR = 1e-3
