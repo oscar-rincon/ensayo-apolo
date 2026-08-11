@@ -1,6 +1,21 @@
 # ensayo-apolo
 Ejercicio para el semillero de usar Apolo para entrenar una red
 
+## In Apolo
+
+To check the available modules:
+
+```
+module avail
+```
+
+To use miniconda and cuda:
+
+```
+module load miniconda3/25.11.1
+module load cuda/12.9
+```
+
 ## Installation
 
 We recommend setting up a new Python environment with conda. You can do this by running the following commands:
