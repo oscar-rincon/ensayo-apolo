@@ -113,3 +113,7 @@ simulando un trabajo corto que dura algunos minutos. Es útil para comprobar que
 (5) Revisa los resultados cuando termine en:
 
     logs/test_apolo_<jobid>.out
+
+
+To export and import files from Apolo it is possible to download the files and drag.
+ 
