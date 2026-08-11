@@ -24,6 +24,26 @@ We recommend setting up a new Python environment with conda. You can do this by 
 conda env create -f nn-train-env.yml
 conda activate nn-train-env
 ```
+
+Another useful comments:
+
+```
+conda activate nn-train-env
+conda deactivate
+```
+
+See environments:
+
+```
+conda env list
+```
+
+Remove an env:
+
+```
+conda env remove -n nn-train-env
+```
+
 Make sure your system’s NVIDIA driver and CUDA toolkit are properly installed.
 You can check your CUDA version with:
 
