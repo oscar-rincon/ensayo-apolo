@@ -51,8 +51,8 @@ echo "Starting application..."
 echo
 
 # Insert code here
-# nvidia-smi
-python simple_nn_training.py
+
+python SimpleCNN.py
 
 # echo
 # echo "================================================="

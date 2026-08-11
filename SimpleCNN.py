@@ -458,6 +458,6 @@ if __name__ == "__main__":
     plot_training_losses(
         train_losses,
         validation_losses,
-        save_dir="results_mnist/plots",
+        save_dir="results_cnn/plots",
         filename="training_validation_loss.pdf",
     )
